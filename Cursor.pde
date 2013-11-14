@@ -25,7 +25,7 @@ class Cursor {
             fill(200,100,100,100);
         }
         noStroke();
-        ellipse(posx, posy, 24.0, 24.0);
+        ellipse(getX(), getY(), 24.0, 24.0);
     }
 
     void onFrame(final Controller controller)
