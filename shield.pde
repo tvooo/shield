@@ -1,7 +1,24 @@
 import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.leapmotion.leap.Controller;
+import com.leapmotion.leap.Finger;
+import com.leapmotion.leap.Frame;
+import com.leapmotion.leap.Hand;
+import com.leapmotion.leap.Tool;
+import com.leapmotion.leap.Vector;
+import com.leapmotion.leap.processing.LeapMotion;
+
+LeapMotion leapMotion;
+
+ConcurrentMap<Integer, Vector> fingerPositions;
+
 PFont font;
 Player player;
 ArrayList<Villain> villains;
+Cursor cursor;
 
 int lastTimer = 0;
 long t = 0;
@@ -11,8 +28,15 @@ int score = 0;
 void setup() {
     size(500, 500);
     imageMode(CENTER);
-    player = new Player(250, 250);
+    noCursor();
+
+    leapMotion = new LeapMotion(this);
+    fingerPositions = new ConcurrentHashMap<Integer, Vector>();
+
+    cursor = new Cursor(true);
+    player = new Player(250, 250, cursor);
     villains = new ArrayList<Villain>();
+
     t = millis();
     gameFloor = loadImage("g_bg.png");
     font = loadFont("Simonetta-Regular-48.vlw");
@@ -30,7 +54,7 @@ void draw() {
     text("Life: " + player.life, 10, 24);
     fill(255);
     text("Dodged fireballs: " + score, 10, 50);
-    
+
     if ( lastTimer < timer ) {
         villains.add( new Villain() );
     }
@@ -64,7 +88,7 @@ void draw() {
             villain.draw();
         }
     }
-    
+
     if (player.life == 0) {
       noLoop();
       background(0);
@@ -74,8 +98,10 @@ void draw() {
       text("GAME OVER!", width/2, height/2);
       return;
     }
-    
+
     player.draw();
+    cursor.draw();
+
     lastTimer = timer;
 }
 
@@ -93,4 +119,11 @@ boolean ballBall(int x1, int y1, int d1, int x2, int y2, int d2) {
   else {            // if not, return false
     return false;
   }
+}
+
+void onFrame(final Controller controller)
+{
+    if ( cursor.leap ) {
+        cursor.onFrame(controller);
+    }
 }

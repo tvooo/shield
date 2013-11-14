@@ -41,10 +41,7 @@ class Villain {
 
     void draw() {
         pushMatrix();
-        //rotate(radians(-getDegree()));
-
-        //translate()
-        translate(posx,posy); //-40,-67
+        translate(posx,posy);
         rotate(radians(-getDegree() + 90));
         image(villain, 0, -27);
         ellipse(0, 0, 20, 20);

@@ -6,24 +6,22 @@ class Player {
     int life;
     PImage player = loadImage("g_player.png");
     PImage playerHit = loadImage("g_player_hit.png");
-    Player(float posx, float posy) {
+    Cursor cur;
+
+    Player(float posx, float posy, Cursor cur) {
         this.posx = posx;
         this.posy = posy;
+        this.cur = cur;
         direction = 90;
         diameter = 40;
         life = 5;
     }
 
     void draw() {
-        /*ellipse(posx, posy, diameter, diameter);
-        line(posx, posy, posx + cos(radians(direction))*(diameter/2), posy - sin(radians(direction))*(diameter/2));*/
-        //translate(width/2, height/2);
         pushMatrix();
         translate(width/2, height/2);
         rotate(radians(-getDegree()));
-        //image(player, -player.width / 2, -player.height / 2);
         image(player, 0, 0, player.width, player.height);
-        //ellipse(posx, posy, diameter, diameter);
         popMatrix();
         fill(255);
         ellipse(posx, posy, diameter, diameter);
@@ -31,11 +29,10 @@ class Player {
 
     float getDegree() {
         float degree = 90;
-        float len = dist(posx, posy, mouseX, mouseY);
+        float len = dist(posx, posy, cur.getX(), cur.getY());
 
-        float y = degrees(asin((posy-mouseY) / len));
-        float x = degrees(acos((posx-mouseX) / len));
-        //println(x + "/" + y);
+        float y = degrees(asin((posy-cur.getY()) / len));
+        float x = degrees(acos((posx-cur.getX()) / len));
         if ( x < 90 && x >= 0 && y >= 0 ) {
             degree = 180 - x;
         } else if ( x > 90 && y >= 0) {
@@ -43,7 +40,6 @@ class Player {
         } else if ( y < 0) {
             degree = 180 + x;
         }
-        //println( degree );
         return degree;
     }
 
