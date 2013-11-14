@@ -39,6 +39,7 @@ class Villain {
     }
 
     void draw() {
+        fill(0);
         ellipse(posx, posy, 20, 20);
     }
 
