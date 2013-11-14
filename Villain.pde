@@ -3,7 +3,8 @@ class Villain {
     float posx, posy;
     int life;
     boolean isDying, isDead;
-
+    PImage villain = loadImage("g_villain.png");
+    
     Villain() {
         float topOrBottom = int(random(2)),
               positive = int(random(2));
@@ -40,6 +41,7 @@ class Villain {
 
     void draw() {
         ellipse(posx, posy, 20, 20);
+        image(villain, posx, posy);
     }
 
     void move() {

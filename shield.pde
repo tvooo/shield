@@ -5,22 +5,24 @@ ArrayList<Villain> villains;
 
 int lastTimer = 0;
 long t = 0;
+PImage gameFloor;
 
 void setup() {
     size(500, 500);
     player = new Player(250, 250);
     villains = new ArrayList<Villain>();
     t = millis();
+    gameFloor = loadImage("g_bg.png");
 }
 
 void draw() {
+    image(gameFloor, 0, 0);
     int timer = int((millis() - t) / 1000);
 
     if ( lastTimer < timer ) {
         villains.add( new Villain() );
     }
 
-    background(100);
     player.shift();
 
     for (Iterator<Villain> iterator = villains.iterator(); iterator.hasNext(); ) {
