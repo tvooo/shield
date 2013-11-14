@@ -10,16 +10,23 @@ class Player {
         this.posx = posx;
         this.posy = posy;
         direction = 90;
-        diameter = 30;
+        diameter = 40;
         life = 5;
     }
 
     void draw() {
-        ellipse(posx, posy, diameter, diameter);
-        line(posx, posy, posx + cos(radians(direction))*(diameter/2), posy - sin(radians(direction))*(diameter/2));
+        /*ellipse(posx, posy, diameter, diameter);
+        line(posx, posy, posx + cos(radians(direction))*(diameter/2), posy - sin(radians(direction))*(diameter/2));*/
+        //translate(width/2, height/2);
+        pushMatrix();
         translate(width/2, height/2);
         rotate(radians(-getDegree()));
-        image(player, -player.width / 2, -player.height / 2);
+        //image(player, -player.width / 2, -player.height / 2);
+        image(player, 0, 0, player.width, player.height);
+        //ellipse(posx, posy, diameter, diameter);
+        popMatrix();
+        fill(255);
+        ellipse(posx, posy, diameter, diameter);
     }
 
     float getDegree() {

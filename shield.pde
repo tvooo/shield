@@ -9,6 +9,7 @@ PImage gameFloor;
 
 void setup() {
     size(500, 500);
+    imageMode(CENTER);
     player = new Player(250, 250);
     villains = new ArrayList<Villain>();
     t = millis();
@@ -16,7 +17,7 @@ void setup() {
 }
 
 void draw() {
-    image(gameFloor, 0, 0);
+    image(gameFloor, 250, 250);
     int timer = int((millis() - t) / 1000);
 
     if ( lastTimer < timer ) {
@@ -35,14 +36,11 @@ void draw() {
         } else if ( villain.isDying ) {
             villain.die();
             villain.draw();
-        } else if ( ballBall(int(villain.posx), int(villain.posy), 20, int(player.posx), int(player.posy), 40) ) {
+        } else if ( ballBall(int(villain.posx), int(villain.posy), 20, int(player.posx), int(player.posy), 70) ) {
             float v = villain.getDegree();
             float p = player.getDegree();
-            /*if ( abs( v - p ) < 20 ) {
-
-            }*/
             float distance = abs(v - p);
-            if ( distance <= 30 || distance >= 330 ) {
+            if ( distance <= 45 || distance >= 315 ) {
                 println("We did not loose a life");
             } else {
                 println("We lost a life");
