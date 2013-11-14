@@ -3,12 +3,14 @@ class Player {
     float posx, posy;
     float direction; // in degrees
     float diameter;
+    int life;
 
     Player(float posx, float posy) {
         this.posx = posx;
         this.posy = posy;
         direction = 90;
         diameter = 40;
+        life = 5;
     }
 
     void draw() {
@@ -16,7 +18,7 @@ class Player {
         line(posx, posy, posx + cos(radians(direction))*(diameter/2), posy - sin(radians(direction))*(diameter/2));
     }
 
-    void shift() {
+    float getDegree() {
         float degree = 90;
         float len = dist(posx, posy, mouseX, mouseY);
 
@@ -30,8 +32,12 @@ class Player {
         } else if ( y < 0) {
             degree = 180 + x;
         }
-        println( degree );
-        direction = degree;
+        //println( degree );
+        return degree;
+    }
+
+    void shift() {
+        direction = getDegree();
     }
 
 }

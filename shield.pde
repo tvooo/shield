@@ -27,9 +27,27 @@ void draw() {
         Villain villain = iterator.next();
 
         villain.move();
-        if ( ballBall(int(villain.posx), int(villain.posy), 20, int(player.posx), int(player.posy), 40) ) {
+
+        if ( villain.isDead ) {
             iterator.remove();
-        } else {
+        } else if ( villain.isDying ) {
+            villain.die();
+            villain.draw();
+        } else if ( ballBall(int(villain.posx), int(villain.posy), 20, int(player.posx), int(player.posy), 40) ) {
+            float v = villain.getDegree();
+            float p = player.getDegree();
+            /*if ( abs( v - p ) < 20 ) {
+
+            }*/
+            float distance = abs(v - p);
+            if ( distance <= 30 || distance >= 330 ) {
+                println("We did not loose a life");
+            } else {
+                println("We lost a life");
+            }
+            villain.die();
+            villain.draw();
+        } else   {
             villain.draw();
         }
     }
