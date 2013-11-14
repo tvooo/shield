@@ -1,5 +1,5 @@
 import java.util.Iterator;
-
+PFont font;
 Player player;
 ArrayList<Villain> villains;
 
@@ -14,14 +14,21 @@ void setup() {
     villains = new ArrayList<Villain>();
     t = millis();
     gameFloor = loadImage("g_bg.png");
+    font = loadFont("Simonetta-Regular-48.vlw");
+    textFont(font, 24);
 }
 
 void draw() {
     image(gameFloor, 0, 0);
     int timer = int((millis() - t) / 1000);
-    
-    text("Life: " + player.life, 40, 40);
-    text("Dodged fireballs: " + score, 40, 60);
+    if (player.life < 3) {
+      fill(250, 0, 25);
+    } else {
+      fill(255);
+    }
+    text("Life: " + player.life, 10, 24);
+    fill(255);
+    text("Dodged fireballs: " + score, 10, 50);
     
     if ( lastTimer < timer ) {
         villains.add( new Villain() );
