@@ -33,7 +33,7 @@ void setup() {
     leapMotion = new LeapMotion(this);
     fingerPositions = new ConcurrentHashMap<Integer, Vector>();
 
-    cursor = new Cursor(true);
+    cursor = new Cursor(false);
     player = new Player(250, 250, cursor);
     villains = new ArrayList<Villain>();
 
@@ -101,6 +101,7 @@ void draw() {
       textFont(font, 48);
       fill(250, 0, 25);
       text("GAME OVER!", width/2, height/2);
+      text("Your score: " + score, width/2, (height/2) + 50);
       return;
     }
 
