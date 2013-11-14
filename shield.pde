@@ -6,6 +6,7 @@ ArrayList<Villain> villains;
 int lastTimer = 0;
 long t = 0;
 PImage gameFloor;
+int score = 0;
 
 void setup() {
     size(500, 500);
@@ -18,7 +19,10 @@ void setup() {
 void draw() {
     image(gameFloor, 0, 0);
     int timer = int((millis() - t) / 1000);
-
+    
+    text("Life: " + player.life, 40, 40);
+    text("Dodged fireballs: " + score, 40, 60);
+    
     if ( lastTimer < timer ) {
         villains.add( new Villain() );
     }
@@ -44,8 +48,10 @@ void draw() {
             float distance = abs(v - p);
             if ( distance <= 30 || distance >= 330 ) {
                 println("We did not loose a life");
+                score += 1;
             } else {
                 println("We lost a life");
+                player.life -= 1;
             }
             villain.die();
             villain.draw();
@@ -53,6 +59,13 @@ void draw() {
             villain.draw();
         }
     }
+    
+    if (player.life == 0) {
+      noLoop();
+      textAlign(CENTER);
+      text("GAME OVER!", width/2, height/2);
+    }
+
 
     player.draw();
 
