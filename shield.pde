@@ -1,11 +1,12 @@
 import java.util.Iterator;
-
+PFont font;
 Player player;
 ArrayList<Villain> villains;
 
 int lastTimer = 0;
 long t = 0;
 PImage gameFloor;
+int score = 0;
 
 void setup() {
     size(500, 500);
@@ -14,12 +15,22 @@ void setup() {
     villains = new ArrayList<Villain>();
     t = millis();
     gameFloor = loadImage("g_bg.png");
+    font = loadFont("Simonetta-Regular-48.vlw");
+    textFont(font, 24);
 }
 
 void draw() {
     image(gameFloor, 250, 250);
     int timer = int((millis() - t) / 1000);
-
+    if (player.life < 3) {
+      fill(250, 0, 25);
+    } else {
+      fill(255);
+    }
+    text("Life: " + player.life, 10, 24);
+    fill(255);
+    text("Dodged fireballs: " + score, 10, 50);
+    
     if ( lastTimer < timer ) {
         villains.add( new Villain() );
     }
@@ -42,8 +53,10 @@ void draw() {
             float distance = abs(v - p);
             if ( distance <= 45 || distance >= 315 ) {
                 println("We did not loose a life");
+                score += 1;
             } else {
                 println("We lost a life");
+                player.life -= 1;
             }
             villain.die();
             villain.draw();
@@ -51,9 +64,18 @@ void draw() {
             villain.draw();
         }
     }
-
+    
+    if (player.life == 0) {
+      noLoop();
+      background(0);
+      textAlign(CENTER);
+      textFont(font, 48);
+      fill(250, 0, 25);
+      text("GAME OVER!", width/2, height/2);
+      return;
+    }
+    
     player.draw();
-
     lastTimer = timer;
 }
 
