@@ -4,8 +4,10 @@ class Player {
     float direction; // in degrees
     float diameter;
     int life;
+    int hitTime;
+    boolean isHit;
     PImage player = loadImage("g_player.png");
-    PImage playerHit = loadImage("g_player_hit.png");
+    PImage player_hit = loadImage("g_player_hit.png");
     Cursor cur;
 
     Player(float posx, float posy, Cursor cur) {
@@ -15,16 +17,29 @@ class Player {
         direction = 90;
         diameter = 40;
         life = 5;
+        hitTime = 0;
+        isHit = false;
     }
 
     void draw() {
         pushMatrix();
         translate(width/2, height/2);
         rotate(radians(-getDegree()));
-        image(player, 0, 0, player.width, player.height);
+        image(isHit ? player_hit : player, 0, 0, player.width, player.height);
         popMatrix();
         fill(255);
-        ellipse(posx, posy, diameter, diameter);
+    }
+
+    void newHit() {
+        isHit = true;
+        hitTime = 20;
+    }
+
+    void hit() {
+        hitTime--;
+        if ( hitTime == 0 ) {
+            isHit = false;
+        }
     }
 
     float getDegree() {

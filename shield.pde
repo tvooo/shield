@@ -60,6 +60,9 @@ void draw() {
     }
 
     player.shift();
+    if ( player.isHit ) {
+        player.hit();
+    }
 
     for (Iterator<Villain> iterator = villains.iterator(); iterator.hasNext(); ) {
         Villain villain = iterator.next();
@@ -81,6 +84,8 @@ void draw() {
             } else {
                 println("We lost a life");
                 player.life -= 1;
+                player.newHit();
+                player.hit();
             }
             villain.die();
             villain.draw();

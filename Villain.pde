@@ -4,6 +4,7 @@ class Villain {
     int life;
     boolean isDying, isDead;
     PImage villain = loadImage("g_villain.png");
+    PImage villain_hit = loadImage("g_villain_hit.png");
 
     Villain() {
         float topOrBottom = int(random(2)),
@@ -43,8 +44,7 @@ class Villain {
         pushMatrix();
         translate(posx,posy);
         rotate(radians(-getDegree() + 90));
-        image(villain, 0, -27);
-        ellipse(0, 0, 20, 20);
+        image(isDying ? villain_hit : villain, 0, -27);
         popMatrix();
     }
 
