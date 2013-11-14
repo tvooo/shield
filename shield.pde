@@ -69,13 +69,15 @@ void draw() {
     
     if (player.life == 0) {
       noLoop();
+      background(0);
       textAlign(CENTER);
+      textFont(font, 48);
+      fill(250, 0, 25);
       text("GAME OVER!", width/2, height/2);
+      return;
     }
-
-
+    
     player.draw();
-
     lastTimer = timer;
 }
 
